@@ -11,14 +11,14 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 
 /**
- * The type Login page model.
+ * The Login page model.
  */
 public class LoginPageModel extends BaseSeleniumPageModel {
 
   /**
    * The URL for the page.
    */
-  private static final String PAGE_URL = SeleniumConfig.getWebSiteBase() + "/Static/Training1/loginpage.html";
+  private static final String PAGE_URL = SeleniumConfig.getWebSiteBase() + "Training1/LoginPage.html";
 
   /**
    * Username Field Selector.
@@ -75,7 +75,7 @@ public class LoginPageModel extends BaseSeleniumPageModel {
   public HomePageModel loginWithValidCredentials(String userName, String password)
       throws InterruptedException, TimeoutException, ExecutionFailedException {
     this.enterCredentials(userName, password);
-    UIWaitFactory.getWaitDriver(getWebDriver()).waitForVisibleElement(LOGIN_BUTTON).click();
+    UIWaitFactory.getWaitDriver(getWebDriver()).waitForVisibleElement(loginButton.getBy()).click();
 
     return new HomePageModel(this.getTestObject());
   }
@@ -83,7 +83,7 @@ public class LoginPageModel extends BaseSeleniumPageModel {
   /**
    * Login with invalid credentials.
    *
-   * @param userName the user name
+   * @param userName the username
    * @param password the password
    * @return the boolean
    */
@@ -91,13 +91,13 @@ public class LoginPageModel extends BaseSeleniumPageModel {
       throws InterruptedException, TimeoutException, ExecutionFailedException {
     this.enterCredentials(userName, password);
     UIWaitFactory.getWaitDriver(getWebDriver()).waitForVisibleElement(LOGIN_BUTTON).click();
-    return UIWaitFactory.getWaitDriver(getWebDriver()).waitForVisibleElement(LOGIN_ERROR).isDisplayed();
+    return UIWaitFactory.getWaitDriver(getWebDriver()).waitForVisibleElement(loginErrorMessage.getBy()).isDisplayed();
   }
 
   /**
    * Enter credentials.
    *
-   * @param userName the user name
+   * @param userName the username
    * @param password the password
    */
   public void enterCredentials(String userName, String password)
@@ -109,11 +109,8 @@ public class LoginPageModel extends BaseSeleniumPageModel {
   public boolean isPageLoaded() {
     try {
       return usernameInput.isDisplayed() && passwordInput.isDisplayed();
-    } catch (TimeoutException e) {
-      e.printStackTrace();
     } catch (InterruptedException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
-    return false;
   }
 }

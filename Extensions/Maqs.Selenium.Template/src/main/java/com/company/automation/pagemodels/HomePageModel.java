@@ -5,16 +5,17 @@ import com.cognizantsoftvision.maqs.selenium.ISeleniumTestObject;
 import com.cognizantsoftvision.maqs.selenium.SeleniumConfig;
 import com.cognizantsoftvision.maqs.selenium.factories.UIWaitFactory;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 /**
- * The type Home page model.
+ * The Home page model.
  */
 public class HomePageModel extends BaseSeleniumPageModel {
 
   /**
    * The URL for the page.
    */
-  private static final String PAGE_URL = SeleniumConfig.getWebSiteBase() + "Static/Training3/HomePage.html";
+  private static final String PAGE_URL = SeleniumConfig.getWebSiteBase() + "Training1/HomePage.html";
 
   /**
    * Welcome Message Selector.
@@ -28,6 +29,15 @@ public class HomePageModel extends BaseSeleniumPageModel {
    */
   public HomePageModel(ISeleniumTestObject testObject) {
     super(testObject);
+  }
+
+  /**
+   * Open the login page.
+   */
+  public void checkURL() {
+    String actualUrl = this.getTestObject().getWebDriver().getCurrentUrl();
+    Assert.assertEquals(actualUrl, PAGE_URL,
+        String.format("The URL: %s does not match %s", PAGE_URL, actualUrl));
   }
 
   /**
